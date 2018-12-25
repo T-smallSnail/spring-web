@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    
+
+	<!-- loading resources properties -->
+	<context:property-placeholder location="classpath:config/db.properties"/>
+	
+
+
+	<!-- DB2-c3p0连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass">
+			<value>${db2.driver}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${db2.url}</value>
+		</property>
+		<property name="user">
+			<value>${db2.user}</value>
+		</property>
+		<property name="password">
+			<value>${db2.password}</value>
+		</property>
+
+		<property name="initialPoolSize">
+			<value>${datasource.initialPoolSize}</value>
+		</property>
+		<property name="minPoolSize">
+			<value>${datasource.minPoolSize}</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>${datasource.maxPoolSize}</value>
+		</property>
+		<property name="maxIdleTime">
+			<value>${datasource.maxIdleTime}</value>
+		</property>
+		<property name="acquireIncrement" >
+			<value>${datasource.acquireIncrement}</value>
+		</property>
+		
+		<property name="idleConnectionTestPeriod">
+			<value>${datasource.idleConnectionTestPeriod}</value>
+		</property>
+
+	</bean>
+	
+	<!-- DB2-SessionFactory-->
+	<bean id="db2hibernateSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.bmcc.vgop.dao.pofordb2" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect.db2}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.use_sql_comments">true</prop>
+				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+				
+				<prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
+				<prop key="hibernate.query.substitutions">hqlLiteral=SQL_LITERAL, hqlFunction=SQLFUNC</prop>
+				<prop key="hibernate.connection.SetBigStringTryClob">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="entityInterceptor">
+		    <bean class="com.bmcc.vgop.dao.hibernate.AuditTrailInterceptor"></bean>
+		</property>
+	</bean>
+
+
+
+		
+	<!-- mysql-dataSource -->
+	<bean id="mysqldataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass">
+			<value>${db.driver}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${db.url}</value>
+		</property>
+		<property name="user">
+			<value>${db.user}</value>
+		</property>
+		<property name="password">
+			<value>${db.password}</value>
+		</property>
+
+		<!-- 初始化连接数 10-->
+		<property name="initialPoolSize">
+			<value>${datasource.initialPoolSize}</value>
+		</property>
+		<!--连接池中保留的最小连接数。10-->
+		<property name="minPoolSize">
+			<value>${datasource.minPoolSize}</value>
+		</property>
+		<!--连接池中保留的最大连接数。100-->
+		<property name="maxPoolSize">
+			<value>${datasource.maxPoolSize}</value>
+		</property>
+		<!--最大空闲时间,1800秒内未使用则连接被丢弃。若为0则永不丢弃。1800-->
+		<property name="maxIdleTime">
+			<value>${datasource.maxIdleTime}</value>
+		</property>
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。10-->
+		<property name="acquireIncrement" >
+			<value>${datasource.acquireIncrement}</value>
+		</property>
+		
+		<!--每60秒检查所有连接池中的空闲连接。60-->
+		<property name="idleConnectionTestPeriod">
+			<value>${datasource.idleConnectionTestPeriod}</value>
+		</property>
+	</bean>
+	
+	<!-- mysql-SessionFactory -->
+	<bean id="mysqlhibernateSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="mysqldataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.bmcc.vgop.dao.poformysql</value>
+				<value>com.bmcc.vgop.webclient</value>
+			</list>
+		</property>	 
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect.mysql}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<!-- <prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.use_sql_comments">true</prop> -->
+				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+				
+				<!-- <prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
+				<prop key="hibernate.query.substitutions">hqlLiteral=SQL_LITERAL, hqlFunction=SQLFUNC</prop> -->
+				<!-- <prop key="hibernate.connection.SetBigStringTryClob">org.springframework.orm.hibernate4.SpringSessionContext</prop> -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+			</props>
+		</property>
+		<property name="entityInterceptor">
+		    <bean class="com.bmcc.vgop.dao.hibernate.AuditTrailInterceptor"></bean>
+		</property>
+	</bean>
+	
+
+</beans>
