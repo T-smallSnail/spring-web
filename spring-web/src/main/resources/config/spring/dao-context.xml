@@ -70,7 +70,7 @@
 		</property>
 		<!-- 该方法可以每次更新数据库时更新时间 -->
 		<property name="entityInterceptor">
-		    <bean class="com.bmcc.vgop.dao.hibernate.AuditTrailInterceptor"></bean>
+		    <bean class="com.pancho.dao.hibernate.AuditTrailInterceptor"></bean>
 		</property>
 	</bean>
 
@@ -143,7 +143,7 @@
 			</props>
 		</property>
 		<property name="entityInterceptor">
-		    <bean class="com.bmcc.vgop.dao.hibernate.AuditTrailInterceptor"></bean>
+		    <bean class="com.pancho.dao.hibernate.AuditTrailInterceptor"></bean>
 		</property>
 	</bean>
 	

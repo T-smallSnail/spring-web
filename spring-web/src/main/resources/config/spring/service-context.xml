@@ -18,13 +18,14 @@
 	
 	
 	<context:component-scan base-package="com.bmcc.vgop,com.bmcc.vgop.webclient" />
+	<!-- 当使用 <context:component-scan/> 后，就可以将 <context:annotation-config/> 移除了。 -->
+	
 	
 	
 	<!-- 使用注解事务 -->
 	<tx:annotation-driven/>
 	 
     <!-- define transaction manager事务管理器 -->
-    
 	<bean id="db2transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager" >
 		<property name="sessionFactory" ref="db2hibernateSessionFactory" />
 	</bean>

@@ -8,6 +8,6 @@
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <!-- 定义spring生命周期(刷新)监听器 -->
-	<bean class="com.bmcc.vgop.web.common.listener.ApplicationContextRefreshListener"></bean>
+	<!-- <bean class="com.bmcc.vgop.web.common.listener.ApplicationContextRefreshListener"></bean> -->
 	
 </beans>
