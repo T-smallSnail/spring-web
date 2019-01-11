@@ -4,40 +4,43 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     
+    
+    <!-- 启动spring监听器,同时参照配置文件初始化所需的实例 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	<!-- 加载spring上下文的具体地址 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath*:config/*-context.xml
+			classpath*:config/spring/*-context.xml
 		</param-value>
 	</context-param>
-
-	<!-- 启动spring监听器,同时参照配置文件初始化所需的实例 -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	
+		
 	<!-- 监听当前线程绑定的request -->
-	<listener>
+	<!-- <listener>
 	    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-	</listener>
+	</listener> -->
 	
 	<!-- 声明spring mvc转向使用的顶级Servlet -->
+	<!-- 该DispatcherServlet默认使用WebApplicationContext作为上下文，Spring默认配置文件为“/WEB-INF/[servlet名字]-servlet.xml”。 -->
 	<servlet>
 		<servlet-name>spring-dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
-			<param-name>namespace</param-name>
-			<param-value>action-servlet</param-value>
+			<!-- <param-name>namespace</param-name>
+			<param-value>action-servlet</param-value> -->
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:config/springmvc/action-servlet.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
 	<!-- 声明 spring mvc 拦截.htm和.json的请求-->
 	<servlet-mapping>
 		<servlet-name>spring-dispatcher</servlet-name>
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
+	
 	
 	<!-- 转换编码  -->
 	<filter>

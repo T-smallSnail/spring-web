@@ -51,7 +51,7 @@
 	</bean> -->
 	
 	<!-- DB2-SessionFactory-->
-	<bean id="db2hibernateSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<!-- <bean id="db2hibernateSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="com.bmcc.vgop.dao.pofordb2" />
 		<property name="hibernateProperties">
@@ -68,11 +68,11 @@
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
-		<!-- 该方法可以每次更新数据库时更新时间 -->
+		该方法可以每次更新数据库时更新时间
 		<property name="entityInterceptor">
 		    <bean class="com.pancho.dao.hibernate.AuditTrailInterceptor"></bean>
 		</property>
-	</bean>
+	</bean> -->
 
 
 
@@ -124,8 +124,8 @@
 		<property name="dataSource" ref="mysqldataSource" />
 		<property name="packagesToScan">
 			<list>
-				<value>com.bmcc.vgop.dao.poformysql</value>
-				<value>com.bmcc.vgop.webclient</value>
+				<value>com.pancho.data</value>
+				<!-- <value>com.bmcc.vgop.webclient</value> -->
 			</list>
 		</property>	 
 		<property name="hibernateProperties">
@@ -143,7 +143,7 @@
 			</props>
 		</property>
 		<property name="entityInterceptor">
-		    <bean class="com.pancho.dao.hibernate.AuditTrailInterceptor"></bean>
+		    <bean class="com.pancho.data.hibernate.AuditTrailInterceptor"></bean>
 		</property>
 	</bean>
 	

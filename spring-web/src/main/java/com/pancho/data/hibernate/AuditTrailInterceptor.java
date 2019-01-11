@@ -1,4 +1,4 @@
-package com.pancho.dao.hibernate;
+package com.pancho.data.hibernate;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

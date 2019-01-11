@@ -12,9 +12,9 @@
 	<!-- 声明纳入spring mvc web上下文的转向 -->
 	<context:component-scan base-package="com.bmcc.vgop.web"></context:component-scan>
 	
-	<!-- 启用spring mvc通用支持	， -->
-	<mvc:annotation-driven />
+	<!-- 启用spring mvc通用支持 -->
 	<!-- 相当于注册了DefaultAnnotationHandlerMapping处理器映射器和AnnotationMethodHandlerAdapter处理器适配器两个bean，配置一些messageconverter。即解决了@Controller、@RequestMapping注解的使用前提配置。 -->
+	<mvc:annotation-driven />
 	
 	<!-- 视图解析器： 声明文件跳转地址前缀和后缀文件名 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -22,5 +22,24 @@
 	    <property name="suffix" value=".jsp"></property>
 	</bean>
 	
+	<!-- 定义文件上传解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <!-- 设定默认编码 -->
+	    <property name="defaultEncoding" value="UTF-8"></property>
+	    <!-- 设定文件上传的最大值为5MB，5*1024*1024 -->
+	    <property name="maxUploadSize" value="5242880"></property>
+	    <!-- 设定文件上传时写入内存的最大值，如果小于这个参数不会生成临时文件，默认为10240 -->
+	    <property name="maxInMemorySize" value="40960"></property>
+	    <!-- 上传文件的临时路径 -->
+	    <property name="uploadTempDir" value="fileUpload/temp"></property>
+	    <!-- 延迟文件解析 -->
+	    <property name="resolveLazily" value="true"/>
+	</bean>
+	
+	
+	
+    <!-- 静态资源访问     -->
+    <mvc:resources mapping="/pages/**" location="/pages/**"/>
+    
     
 </beans>
