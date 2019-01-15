@@ -10,7 +10,7 @@
 		 http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 	<!-- 声明纳入spring mvc web上下文的转向 -->
-	<context:component-scan base-package="com.bmcc.vgop.web"></context:component-scan>
+	<!-- <context:component-scan base-package="com.pancho.web"></context:component-scan> -->
 	
 	<!-- 启用spring mvc通用支持 -->
 	<!-- 相当于注册了DefaultAnnotationHandlerMapping处理器映射器和AnnotationMethodHandlerAdapter处理器适配器两个bean，配置一些messageconverter。即解决了@Controller、@RequestMapping注解的使用前提配置。 -->

@@ -4,11 +4,10 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     
+    <!-- 同时还存在着这样一种配置节：context-param，它用于向 ServletContext 提供键值对，即应用程序上下文信息。
+    	我们的 listener, filter 等在初始化时会用到这些上下文中的信息，那么 context-param 配置节是不是应该写在 listener 配置节前呢？
+    	实际上 context-param 配置节可写在任意位置，因此真正的加载顺序为：context-param -> listener -> filter -> servlet -->
     
-    <!-- 启动spring监听器,同时参照配置文件初始化所需的实例 -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
 	<!-- 加载spring上下文的具体地址 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
@@ -16,6 +15,11 @@
 			classpath*:config/spring/*-context.xml
 		</param-value>
 	</context-param>
+	
+	<!-- 启动spring监听器,同时参照配置文件初始化所需的实例 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 		
 	<!-- 监听当前线程绑定的request -->
 	<!-- <listener>
@@ -29,7 +33,7 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<!-- <param-name>namespace</param-name>
-			<param-value>action-servlet</param-value> -->
+			<param-value>action-servlet</param-value> --><!-- 这种方式action-servlet.xml必须在WEB-INFO目录中 -->
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:config/springmvc/action-servlet.xml</param-value>
 		</init-param>
