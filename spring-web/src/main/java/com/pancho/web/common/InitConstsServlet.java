@@ -15,11 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.bmcc.vgop.common.consts.DataConst;
+/*import com.bmcc.vgop.common.consts.DataConst;
 import com.bmcc.vgop.data.init.InitDao;
 import com.bmcc.vgop.data.init.po.TVgopAndMarketConst;
 import com.bmcc.vgop.data.init.po.TVgopAndMarketThirdpart;
-import com.bmcc.vgop.data.model.TVgopAndMarketOtherProInfo;
+import com.bmcc.vgop.data.model.TVgopAndMarketOtherProInfo;*/
 
 import ch.qos.logback.classic.Logger;
 
@@ -32,7 +32,7 @@ import ch.qos.logback.classic.Logger;
 
 public class InitConstsServlet extends HttpServlet {
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(InitConstsServlet.class);
-
+/*
 	InitDao initDao;
 
 	@Override
@@ -61,9 +61,9 @@ public class InitConstsServlet extends HttpServlet {
 		
 	}
 
-	/**
+	*//**
 	 * 初始化第三方产品信息
-	 */
+	 *//*
 	private void initThirdPartInfo() {
 		logger.info("初始化第三方产品信息 start");
 		DataConst.DATA_SKU_INFO.clear();
@@ -81,9 +81,9 @@ public class InitConstsServlet extends HttpServlet {
 		
 	}
 
-	/**
+	*//**
 	 * 初始化常量表
-	 */
+	 *//*
 	private void initEncrInfo() {
 		logger.info("初始化内存数据 start");
 		DataConst.DATA_MAP.clear();
@@ -96,9 +96,9 @@ public class InitConstsServlet extends HttpServlet {
 		logger.info("初始化内存数据 end ");
 	}
 	
-	/**
+	*//**
 	 * 初始化第三方业务订购人存储关系表数据
-	 */
+	 *//*
 	private void initOtherProInfo() {
 		logger.info("初始化第三方业务订购人存储关系表数据 start");
 		DataConst.DATA_OTHER_PRO_INFO.clear();
@@ -110,7 +110,7 @@ public class InitConstsServlet extends HttpServlet {
 		}
 		logger.info("初始化第三方业务订购人存储关系表数据 end ");
 	}
-	
+	*/
 	
 
 }

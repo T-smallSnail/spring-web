@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.qos.logback.classic.Logger;
 
-@ControllerAdvice 
+//@ControllerAdvice 
 public class ExceptionHandlerAdvice { 
 	private final static Logger logger = (Logger) LoggerFactory.getLogger(ExceptionHandlerAdvice.class);
 	@ExceptionHandler(value = Exception.class) 
