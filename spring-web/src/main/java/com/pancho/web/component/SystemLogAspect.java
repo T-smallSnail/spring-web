@@ -41,27 +41,25 @@ public class SystemLogAspect {
     public  void controllerAspect() {  
     }  
     
+    @Before("controllerAspect()")
+    public void doBefore(JoinPoint joinPoint) {
+    	beforHand(joinPoint);
+     }
+    
+    
     /**
      * 前置通知 用于拦截操作，在方法返回后执行
      * @param joinPoint 切点
      */
     @AfterReturning(pointcut = "controllerAspect()")
-    public void doBefore(JoinPoint joinPoint) {
-	handleLog(joinPoint, null);
+    public void afterReturn(JoinPoint joinPoint) {
+    	handleLog(joinPoint);
     }
  
-    /**
-     * 拦截异常操作，有异常时执行
-     * 
-     * @param joinPoint
-     * @param e
-     */
-    @AfterThrowing(value = "controllerAspect()", throwing = "e")
-    public void doAfter(JoinPoint joinPoint, Exception e) {
-	handleLog(joinPoint, e);
-    }
+    
+    
  
-    private void handleLog(JoinPoint joinPoint, Exception e) {
+    private void handleLog(JoinPoint joinPoint) {
 	try {
 		// 获得注解
 		Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
@@ -72,11 +70,20 @@ public class SystemLogAspect {
 	    String methodName = joinPoint.getSignature().getName();
 	    String operationType = controllerLog.operationType();
 	    String operationName = controllerLog.operationName();
+	    
+	    //获取入参
+	    
 	    //打印日志，如有需要还可以存入数据库
 	    log.info(">>>>>>>>>>>>>模块名称：{}",operationName);
 	    log.info(">>>>>>>>>>>>>操作名称：{}",operationType);
 	    log.info(">>>>>>>>>>>>>类名：{}",className);
 	    log.info(">>>>>>>>>>>>>方法名：{}",methodName);
+	    
+	    
+	    
+	    
+	    
+	    
 	} catch (Exception exp) {
 	    // 记录本地异常日志
 	    log.error("==前置通知异常==");
@@ -85,6 +92,68 @@ public class SystemLogAspect {
 	}
     }
  
+    
+    
+    
+    
+    private void beforHand(JoinPoint joinPoint) {
+	try {
+		// 获得注解
+		Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
+	    Log controllerLog = method.getAnnotation(Log.class);
+	    
+	    // 获得方法名称
+	    String className = joinPoint.getTarget().getClass().getName();
+	    String methodName = joinPoint.getSignature().getName();
+	    String operationType = controllerLog.operationType();
+	    String operationName = controllerLog.operationName();
+	    
+	    
+	    
+	    //打印日志，如有需要还可以存入数据库
+	    log.info(">>>>>>>>>>>>>模块名称：{}",operationName);
+	    log.info(">>>>>>>>>>>>>操作名称：{}",operationType);
+	    log.info(">>>>>>>>>>>>>类名：{}",className);
+	    log.info(">>>>>>>>>>>>>方法名：{}",methodName);
+	    
+	    //获取入参
+	    log.info(">>>>>>>>>>>>>{}",parseParames(joinPoint.getArgs()));
+	    
+	    
+	    
+	    
+	} catch (Exception exp) {
+	    // 记录本地异常日志
+	    log.error("==前置通知异常==");
+	    log.error("异常信息:{}", exp.getMessage());
+	    exp.printStackTrace();
+	}
+    }
+    
+    
+    
+    private String parseParames(Object[] parames) {
+
+        if (null == parames || parames.length <= 0) {
+            return "";
+
+        }
+        StringBuffer param = new StringBuffer("传入参数 # 个:[ ");
+        int i =0;
+        for (Object obj : parames) {
+            i++;
+            if (i==1){
+                param.append(obj.toString());
+                continue;
+            }
+            param.append(" ,").append(obj.toString());
+        }
+        return param.append(" ]").toString().replace("#",String.valueOf(i));
+    }
+
+    
+    
+    
     /**
      * 是否存在注解，如果存在就获取
      */
