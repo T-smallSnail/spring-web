@@ -17,8 +17,9 @@ public class UserController {
     
     @RequestMapping("testAOP")
     @Log(operationType="add操作:",operationName="添加用户")  
-    public void testAOP(String userName,String password){        
-    	log.info("添加用户操作，用户名:{}，密码{}",userName,password);
+    public String testAOP(String userName,String password){        
+    	log.info("============添加用户操作，用户名:{}，密码{}",userName,password);
+    	return "添加用户成功！";
 
     }
 }

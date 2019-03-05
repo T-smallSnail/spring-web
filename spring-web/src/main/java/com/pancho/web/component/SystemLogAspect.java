@@ -26,7 +26,6 @@ import org.springframework.stereotype.Component;
 import com.pancho.web.annotion.Log;
 
 /**
- * 
  * @desc 切点类 
  */
 
@@ -39,27 +38,27 @@ public class SystemLogAspect {
     //Controller层切点  
     @Pointcut("execution (* com.pancho.web.user..*.*(..))")  
     public  void controllerAspect() {  
-    }  
+    }
     
+    
+    //前置增强方法
     @Before("controllerAspect()")
     public void doBefore(JoinPoint joinPoint) {
     	beforHand(joinPoint);
      }
     
     
-    /**
-     * 前置通知 用于拦截操作，在方法返回后执行
-     * @param joinPoint 切点
-     */
-    @AfterReturning(pointcut = "controllerAspect()")
-    public void afterReturn(JoinPoint joinPoint) {
-    	handleLog(joinPoint);
+   
+    //目标方法正常完成后
+    @AfterReturning(pointcut = "controllerAspect()",returning="val")
+    public void afterReturn(JoinPoint joinPoint,Object val) {
+    	afterHand(joinPoint,val);
     }
  
     
     
  
-    private void handleLog(JoinPoint joinPoint) {
+    private void afterHand(JoinPoint joinPoint,Object val) {
 	try {
 		// 获得注解
 		Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
@@ -78,6 +77,7 @@ public class SystemLogAspect {
 	    log.info(">>>>>>>>>>>>>操作名称：{}",operationType);
 	    log.info(">>>>>>>>>>>>>类名：{}",className);
 	    log.info(">>>>>>>>>>>>>方法名：{}",methodName);
+	    log.info(">>>>>>>>>>>>>返回值：{}",val.toString());
 	    
 	    
 	    
